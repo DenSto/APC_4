@@ -1,18 +1,17 @@
 #include <stdlib.h>
 #include "field.h"
+#include "utils.h"
 
 
-Field *new_field(int nx, int ghost_cells){
+Field *new_field(int nx, int ny, int ghost_cells){
     Field* newField = malloc(sizeof(Field));
     newField->nx = nx;
+    newField->ny = ny;
     newField->nghost = ghost_cells;
-    newField->data = malloc((nx + 2*ghost_cells)*sizeof(double));
-    for(int i = 0; i < nx + 2*ghost_cells; i++){
-        newField->data[i] = malloc((nx+2*ghost_cells)*sizeof(double));
-    }
+    newField->data = new_contiguous_2dArray(nx + 2*ghost_cells,ny + 2*ghost_cells);
     
     for(int i = 0; i < nx + 2*ghost_cells; i++){
-        for(int j = 0; i < nx + 2*ghost_cells; i++){
+        for(int j = 0; i < ny + 2*ghost_cells; i++){
             newField->data[i][j] = 0.0;
         }
     }
@@ -20,10 +19,7 @@ Field *new_field(int nx, int ghost_cells){
 }
 
 void free_field(Field* field){
-    for(int i = 0; i < field->nx + 2*field->nghost; i++){
-        free(field->data[i]);
-    }
-    free(field->data);
+    free_contiguous_2dArray(field->data);
     free(field);
 }
 

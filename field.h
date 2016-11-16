@@ -7,10 +7,11 @@ typedef struct field_t Field;
 struct field_t{
         double **data;
         int nx;
+        int ny;
         int nghost;
 };
 
-Field *new_field(int nx, int ghost_cells);
+Field *new_field(int nx, int ny, int ghost_cells);
 
 void free_field(Field* field);
 void set_value(Field* field, int i, int j, double value);

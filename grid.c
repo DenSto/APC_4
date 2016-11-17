@@ -1,10 +1,13 @@
 #include <stdlib.h>
+#include "assert.h"
 #include "grid.h"
 #include "utils.h"
 
 
 Grid *new_grid(int nx, int ny, double lX, double lY, int ghost_cells, double offsets[]){
+    int i,j;
     Grid* newGrid = malloc(sizeof(Grid));
+    assert(newGrid != NULL);
     newGrid->nx = nx;
     newGrid->ny = ny;
     newGrid->length_x = lX;
@@ -15,8 +18,8 @@ Grid *new_grid(int nx, int ny, double lX, double lY, int ghost_cells, double off
     newGrid->x = new_contiguous_2dArray(nx + 2*ghost_cells,ny + 2*ghost_cells);
     newGrid->y = new_contiguous_2dArray(nx + 2*ghost_cells,ny + 2*ghost_cells);
 
-    for (int i = 0; i < nx; i++){
-        for (int j = 0; j < ny; j++){
+    for (i = 0; i < nx; i++){
+        for (j = 0; j < ny; j++){
             newGrid->x[i + ghost_cells][j + ghost_cells] = offsets[0] + newGrid->dx*i;
             newGrid->y[i + ghost_cells][j + ghost_cells] = offsets[1] + newGrid->dy*j;
         }

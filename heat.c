@@ -142,8 +142,8 @@ int compute_rhs(Grid* grid, Field* field, Field* rhs){
 
 int time_step(double dt, Grid* grid, Field* field, Field* rhs){
     int i,j;
-    for(int i = 0; i < field->nx; i++){
-        for(int j = 0; j < field->ny; j++){
+    for(i = 0; i < field->nx; i++){
+        for(j = 0; j < field->ny; j++){
             double old = get_field_value(field,i,j);
             double new = dt*get_field_value(rhs,i,j);
             set_field_value(field,i,j,old+new);

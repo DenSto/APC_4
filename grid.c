@@ -26,7 +26,7 @@ Grid *new_grid(int nx, int ny, double lX, double lY, int ghost_cells, double off
     }
 
     // handle ghost zones specific to our problem. Not the best way to do it.
-    for (int i = 0; i < nx; i++){
+    for (i = 0; i < nx; i++){
         newGrid->x[i + ghost_cells][0] = offsets[0] + newGrid->dx*i;
         newGrid->y[i + ghost_cells][0] = offsets[1];
 
@@ -34,7 +34,7 @@ Grid *new_grid(int nx, int ny, double lX, double lY, int ghost_cells, double off
         newGrid->y[i + ghost_cells][ny + ghost_cells] = offsets[1] + lY;
     }
 
-    for (int j = 0; j <= ny; j++){
+    for (j = 0; j <= ny; j++){
         newGrid->x[0][j + ghost_cells] = offsets[0];
         newGrid->y[0][j + ghost_cells] = offsets[1] + newGrid->dx*j;
 

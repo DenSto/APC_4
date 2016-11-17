@@ -1,0 +1,5 @@
+*.dat
+*.o
+heat
+heat_omp
+heat_mpi

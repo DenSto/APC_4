@@ -14,7 +14,7 @@ Field *new_field(int nx, int ny, int ghost_cells){
     newField->data = new_contiguous_2dArray(nx + 2*ghost_cells,ny + 2*ghost_cells);
     
     for(i = 0; i < nx + 2*ghost_cells; i++){
-        for(j = 0; i < ny + 2*ghost_cells; i++){
+        for(j = 0; j < ny + 2*ghost_cells; j++){
             newField->data[i][j] = 0.0;
         }
     }
@@ -24,12 +24,4 @@ Field *new_field(int nx, int ny, int ghost_cells){
 void free_field(Field* field){
     free_contiguous_2dArray(field->data);
     free(field);
-}
-
-void set_value(Field* field, int i, int j, double value){
-    field->data[i+field->nghost][j+field->nghost] = value;
-}
-
-double get_value(Field* field, int i, int j){
-    return field->data[i+field->nghost][j+field->nghost];
 }

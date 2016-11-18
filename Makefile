@@ -20,8 +20,11 @@ all : heat heat_omp heat_mpi
 clean : 
 	rm -f $(objects) heat heat_omp heat_mpi
 
+.PHONY: heat_omp.o
 heat_omp.o :
-	cc $(FLAGS) -D OPENMP -o heat_omp.o -c $(CFLAGS) heat.c
+	$(CLANG_OMP) $(FLAGS) -D OPENMP -fopenmp -o heat_omp.o -c $(CFLAGS) heat.c
+
+.PHONY: heat_mpi.o
 heat_mpi.o :
 	$(CLANG_MPI) $(FLAGS) -D MPI -o heat_mpi.o -c $(CFLAGS) heat.c
 %.o : %.c

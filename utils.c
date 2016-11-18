@@ -20,7 +20,3 @@ void free_contiguous_2dArray(double **array){
     free(array[0]);
     free(array);
 }
-
-void shape_1d_to_2d(double *in, double **out, int nx, int ny){
-
-}

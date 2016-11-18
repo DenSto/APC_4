@@ -2,19 +2,19 @@
 #include "assert.h"
 #include "field.h"
 #include "utils.h"
+#include "grid.h"
 
 
-Field *new_field(int nx, int ny, int ghost_cells){
+Field *new_field(Grid* grid){
     int i,j;
     Field* newField = malloc(sizeof(Field));
-    assert(newField!=NULL);
-    newField->nx = nx;
-    newField->ny = ny;
-    newField->nghost = ghost_cells;
-    newField->data = new_contiguous_2dArray(nx + 2*ghost_cells,ny + 2*ghost_cells);
+    assert(grid != NULL && newField!=NULL);
+    newField->grid = grid;
+    newField->nghost = grid->nghost;
+	newField->data = new_contiguous_2dArray(grid->nx + 2*grid->nghost,grid->ny + 2*grid->nghost);
     
-    for(i = 0; i < nx + 2*ghost_cells; i++){
-        for(j = 0; j < ny + 2*ghost_cells; j++){
+    for(i = 0; i <grid->nx + 2*grid->nghost; i++){
+        for(j = 0; j < grid->ny + 2*grid->nghost; j++){
             newField->data[i][j] = 0.0;
         }
     }
@@ -22,6 +22,7 @@ Field *new_field(int nx, int ny, int ghost_cells){
 }
 
 void free_field(Field* field){
+	field->grid=NULL;
     free_contiguous_2dArray(field->data);
     free(field);
 }

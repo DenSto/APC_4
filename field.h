@@ -1,17 +1,21 @@
+/*
+ * Field : Structure of field quantities (Temperature, density, etc...)
+ *         Requires a grid object to construct.
+ */
 #ifndef FIELD_H
 #define FIELD_H
 
+#include "grid.h"
 
 typedef struct field_t Field;
 
 struct field_t{
         double **data;
-        int nx;
-        int ny;
-        int nghost;
+		int nghost; // kept for speed!
+		Grid* grid;
 };
 
-Field *new_field(int nx, int ny, int ghost_cells);
+Field *new_field(Grid* grid);
 
 void free_field(Field* field);
 void set_value(Field* field, int i, int j, double value);

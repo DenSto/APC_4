@@ -1,3 +1,7 @@
+/*
+ * Grid : Structure that represents the grid on which fields live.
+ * 	      Contains grid spacing, lenghts and information on the ghost cells. 
+ */
 #ifndef GRID_H
 #define GRID_H
 

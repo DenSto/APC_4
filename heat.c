@@ -242,14 +242,17 @@ int time_step(double dt, Grid* grid, Field* field, Field* rhs){
 double calculate_temperature(Grid* grid, Field* field){
     double result=0;
     int i,j;
-    double nx = field->nx;
-    double ny = field->ny;
-    #pragma omp parallel for shared(field,grid) private (i,j) reduction(+:result)
-    for(i =0; i < nx; i++){
-        for(j =0; j < ny; j++){
-            result += get_field_value(field,i,j);
-        }
-    }
+    int nx = field->nx;
+    int ny = field->ny;
+    #pragma omp parallel shared(field,grid) private (i,j) reduction(+:result)
+	{
+		#pragma omp for
+    	for(i =0; i < nx; i++){
+        	for(j =0; j < ny; j++){
+            	result += get_field_value(field,i,j);
+        	}
+    	}
+	}
 #ifdef MPI
     double red_temp;
     MPI_Allreduce(&result,&red_temp,1,MPI_DOUBLE,MPI_SUM,MPI_COMM_WORLD);

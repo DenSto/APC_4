@@ -1,5 +1,13 @@
 *.dat
+*.out
+*.log
+*.ps
+*.dvi
+*.mac
+*.aux
+*.eps
 *.o
 heat
 heat_omp
 heat_mpi
+output_*

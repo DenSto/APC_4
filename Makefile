@@ -3,7 +3,7 @@ libs = -lm
 FLAGS = -O3
 #FLAGS = -g -O0 -Wall
 
-CC_OMP = ~/openmp/build/bin/clang
+CC_OMP = gcc
 CC_MPI = mpicc
 
 heat : heat.o grid.o field.o utils.o

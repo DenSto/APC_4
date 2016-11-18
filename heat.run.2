@@ -1,0 +1,29 @@
+#!/bin/bash
+# Parallel job using 2 processors:
+#SBATCH -N 1 # number of nodes
+#SBATCH --ntasks-per-node=2 # number of processors per node
+#SBATCH -t 0:30:00 # run for 10 minutes max
+#SBATCH --mail-type=begin # send email when process begins...
+#SBATCH --mail-type=end # ...and when it ends...
+#SBATCH --mail-type=fail # ...or when it fails.
+#SBATCH --mail-user=<yourNetID>@princeton.edu # Don’t forget to define your email!
+
+# Load openmpi environment
+module load openmpi
+
+# Make sure you are in the correct directory
+cd /tigress/dstonge/HW4/
+
+
+proc=2
+for nx in 128 256 512
+do
+	dir=output_${nx}_${proc}
+	mkdir $dir
+	./heat_omp $nx $proc > heat_omp.$nx.$proc.out
+	mv heat_omp.$nx.$proc.out $dir/
+	srun ./heat_mpi $nx > heat_mpi.$nx.$proc.out
+	mv heat_mpi.$nx.$proc.out $dir/
+	./join_dat.sh $proc
+	mv *.dat $dir/
+done
